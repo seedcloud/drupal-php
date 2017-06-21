@@ -2,7 +2,7 @@
 
 VERSION ?= 7.1
 
-REPO = wodby/drupal-php
+REPO = seedcloud/drupal-php
 NAME = drupal-php-$(VERSION)
 
 .PHONY: build test push shell run start stop logs clean release

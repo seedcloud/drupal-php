@@ -1,7 +1,7 @@
-FROM wodby/php:5.3
+FROM seedcloud/php:5.3
 
-ENV WODBY_DIR_FILES /mnt/files
-ENV WODBY_DIR_CONF /var/www/conf
+ENV SEEDCLOUD_DIR_FILES /mnt/files
+ENV SEEDCLOUD_DIR_CONF /var/www/conf
 
 ENV PHP_ALWAYS_POPULATE_RAW_POST_DATA -1
 ENV PHP_MBSTRING_ENCODING_TRANSLATION Off
@@ -17,8 +17,8 @@ RUN su-exec www-data composer global require drush/drush:7.4.0 && \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk && \
     # Change overridden target name to avoid warnings.
     sed -i 's/git-checkout:/php-git-checkout:/' /usr/local/bin/php.mk && \
-    mkdir -p $WODBY_DIR_FILES $WODBY_DIR_CONF && \
-    chown -R www-data:www-data $WODBY_DIR_CONF
+    mkdir -p $SEEDCLOUD_DIR_FILES $SEEDCLOUD_DIR_CONF && \
+    chown -R www-data:www-data $SEEDCLOUD_DIR_CONF
 
 COPY templates /etc/gotpl/
 COPY actions /usr/local/bin

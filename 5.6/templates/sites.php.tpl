@@ -2,7 +2,7 @@
 
 $site = {{ getenv "DRUPAL_SITE" "default" }};
 
-{{ $hosts := split (getenv "WODBY_HOSTS") "/" }}
+{{ $hosts := split (getenv "SEEDCLOUD_HOSTS") "/" }}
 {{ range $hosts }}
 $sites['{{ . }}'] = $site;
 {{ end }}

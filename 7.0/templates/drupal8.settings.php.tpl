@@ -4,24 +4,24 @@
  * Wodby environment configuration for Drupal 8.
  */
 
-{{ $hosts := split (getenv "WODBY_HOSTS" "" ) "/" }}{{ range $hosts }}
-$wodby['hosts'][] = '{{ . }}';
+{{ $hosts := split (getenv "SEEDCLOUD_HOSTS" "" ) "/" }}{{ range $hosts }}
+$seedcloud['hosts'][] = '{{ . }}';
 {{ end }}
 
-$wodby['files_dir'] = '{{ getenv "WODBY_DIR_FILES" }}';
-$wodby['site'] = '{{ getenv "DRUPAL_SITE" }}';
-$wodby['hash_salt'] = '{{ getenv "DRUPAL_HASH_SALT" "" }}';
-$wodby['sync_salt'] = '{{ getenv "DRUPAL_FILES_SYNC_SALT" "" }}';
+$seedcloud['files_dir'] = '{{ getenv "SEEDCLOUD_DIR_FILES" }}';
+$seedcloud['site'] = '{{ getenv "DRUPAL_SITE" }}';
+$seedcloud['hash_salt'] = '{{ getenv "DRUPAL_HASH_SALT" "" }}';
+$seedcloud['sync_salt'] = '{{ getenv "DRUPAL_FILES_SYNC_SALT" "" }}';
 
-$wodby['db']['host'] = '{{ getenv "DB_HOST" "" }}';
-$wodby['db']['name'] = '{{ getenv "DB_NAME" "" }}';
-$wodby['db']['username'] = '{{ getenv "DB_USER" "" }}';
-$wodby['db']['password'] = '{{ getenv "DB_PASSWORD" "" }}';
-$wodby['db']['driver'] = '{{ getenv "DB_DRIVER" "mysql" }}';
+$seedcloud['db']['host'] = '{{ getenv "DB_HOST" "" }}';
+$seedcloud['db']['name'] = '{{ getenv "DB_NAME" "" }}';
+$seedcloud['db']['username'] = '{{ getenv "DB_USER" "" }}';
+$seedcloud['db']['password'] = '{{ getenv "DB_PASSWORD" "" }}';
+$seedcloud['db']['driver'] = '{{ getenv "DB_DRIVER" "mysql" }}';
 
-$wodby['redis']['host'] = '{{ getenv "REDIS_HOST" "" }}';
-$wodby['redis']['port'] = '{{ getenv "REDIS_SERVICE_PORT" "6379" }}';
-$wodby['redis']['password'] = '{{ getenv "REDIS_PASSWORD" "" }}';
+$seedcloud['redis']['host'] = '{{ getenv "REDIS_HOST" "" }}';
+$seedcloud['redis']['port'] = '{{ getenv "REDIS_SERVICE_PORT" "6379" }}';
+$seedcloud['redis']['password'] = '{{ getenv "REDIS_PASSWORD" "" }}';
 
 if (isset($_SERVER['HTTP_X_REAL_IP'])) {
   $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_REAL_IP'];
@@ -32,7 +32,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
 }
 
 if (empty($settings['container_yamls'])) {
-  $settings['container_yamls'][] = "sites/{$wodby['site']}/services.yml";
+  $settings['container_yamls'][] = "sites/{$seedcloud['site']}/services.yml";
 }
 
 if (!array_key_exists('update_free_access', $settings)) {
@@ -40,7 +40,7 @@ if (!array_key_exists('update_free_access', $settings)) {
 }
 
 if (empty($settings['hash_salt'])) {
-  $settings['hash_salt'] = $wodby['hash_salt'];
+  $settings['hash_salt'] = $seedcloud['hash_salt'];
 }
 
 if (!array_key_exists('file_scan_ignore_directories', $settings)) {
@@ -50,7 +50,7 @@ if (!array_key_exists('file_scan_ignore_directories', $settings)) {
   ];
 }
 
-if (!empty($wodby['db']['host'])) {
+if (!empty($seedcloud['db']['host'])) {
   if (!isset($databases['default']['default'])) {
     $databases['default']['default'] = [];
   }
@@ -58,29 +58,29 @@ if (!empty($wodby['db']['host'])) {
   $databases['default']['default'] = array_merge(
     $databases['default']['default'],
     [
-      'host' => $wodby['db']['host'],
-      'database' => $wodby['db']['name'],
-      'username' => $wodby['db']['username'],
-      'password' => $wodby['db']['password'],
-      'driver' => $wodby['db']['driver'],
+      'host' => $seedcloud['db']['host'],
+      'database' => $seedcloud['db']['name'],
+      'username' => $seedcloud['db']['username'],
+      'password' => $seedcloud['db']['password'],
+      'driver' => $seedcloud['db']['driver'],
     ]
   );
 }
 
-$settings['file_public_path'] = "sites/{$wodby['site']}/files";
-$settings['file_private_path'] = $wodby['files_dir'] . '/private';
+$settings['file_public_path'] = "sites/{$seedcloud['site']}/files";
+$settings['file_private_path'] = $seedcloud['files_dir'] . '/private';
 $settings['file_temporary_path'] = '/tmp';
 
-$config_directories['sync'] = $wodby['files_dir'] . '/config/sync_' . $wodby['sync_salt'];
+$config_directories['sync'] = $seedcloud['files_dir'] . '/config/sync_' . $seedcloud['sync_salt'];
 
-if (!empty($wodby['hosts'])) {
-  foreach ($wodby['hosts'] as $host) {
+if (!empty($seedcloud['hosts'])) {
+  foreach ($seedcloud['hosts'] as $host) {
     $settings['trusted_host_patterns'][] = '^' . str_replace('.', '\.', $host) . '$';
   }
 }
 
 if (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'install') {
-  $site_mods_dir = "sites/{$wodby['site']}/modules";
+  $site_mods_dir = "sites/{$seedcloud['site']}/modules";
   $contrib_path = is_dir('modules/contrib') ? 'modules/contrib' : 'modules';
   $contrib_path_site = is_dir("$site_mods_dir/contrib") ? "$site_mods_dir/contrib" : $site_mods_dir;
 
@@ -92,10 +92,10 @@ if (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'install') {
     $redis_module_path = "$contrib_path_site/redis";
   }
 
-  if (!empty($wodby['redis']['host']) && $redis_module_path) {
-    $settings['redis.connection']['host'] = $wodby['redis']['host'];
-    $settings['redis.connection']['port'] = $wodby['redis']['port'];
-    $settings['redis.connection']['password'] = $wodby['redis']['password'];
+  if (!empty($seedcloud['redis']['host']) && $redis_module_path) {
+    $settings['redis.connection']['host'] = $seedcloud['redis']['host'];
+    $settings['redis.connection']['port'] = $seedcloud['redis']['port'];
+    $settings['redis.connection']['password'] = $seedcloud['redis']['password'];
     $settings['redis.connection']['base'] = 0;
     $settings['redis.connection']['interface'] = 'PhpRedis';
     $settings['cache']['default'] = 'cache.backend.redis';

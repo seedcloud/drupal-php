@@ -1,16 +1,13 @@
 # PHP (with FPM) docker container image for Drupal
 
-[![Build Status](https://travis-ci.org/wodby/drupal-php.svg?branch=master)](https://travis-ci.org/wodby/drupal-php)
-[![Docker Pulls](https://img.shields.io/docker/pulls/wodby/drupal-php.svg)](https://hub.docker.com/r/wodby/drupal-php)
-[![Docker Stars](https://img.shields.io/docker/stars/wodby/drupal-php.svg)](https://hub.docker.com/r/wodby/drupal-php)
-[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
+This repository was forked initially from https://github.com/wodby/drupal-php
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`7.1-2.4.0`, `7.1`, `latest` (*7.1/Dockerfile*)](https://github.com/wodby/drupal-php/tree/master/7.1/Dockerfile)
-- [`7.0-2.4.0`, `7.0`, (*7.0/Dockerfile*)](https://github.com/wodby/drupal-php/tree/master/7.0/Dockerfile)
-- [`5.6-2.4.0`, `5.6`, (*5.6/Dockerfile*)](https://github.com/wodby/drupal-php/tree/master/5.6/Dockerfile)
-- [`5.3-2.4.0`, `5.3`, (*5.3/Dockerfile*)](https://github.com/wodby/drupal-php/tree/master/5.3/Dockerfile)
+- [`7.1-2.4.0`, `7.1`, `latest` (*7.1/Dockerfile*)](https://github.com/seedcloud/drupal-php/tree/master/7.1/Dockerfile)
+- [`7.0-2.4.0`, `7.0`, (*7.0/Dockerfile*)](https://github.com/seedcloud/drupal-php/tree/master/7.0/Dockerfile)
+- [`5.6-2.4.0`, `5.6`, (*5.6/Dockerfile*)](https://github.com/seedcloud/drupal-php/tree/master/5.6/Dockerfile)
+- [`5.3-2.4.0`, `5.3`, (*5.3/Dockerfile*)](https://github.com/seedcloud/drupal-php/tree/master/5.3/Dockerfile)
 
 ## Environment variables available for customization
 
@@ -25,8 +22,4 @@
 | PHP_REALPATH_CACHE_TTL            | 3600  | |
 | PHP_SESSION_AUTO_START            | 0     | <= 5.6 |
 
-See more at [wodby/php](https://github.com/wodby/php)
-
-## Complete Drupal stack
-
-To get full docker-based Drupal stack see [Docker4Drupal](https://github.com/wodby/docker4drupal).
+See more at [seedcloud/php](https://github.com/seedcloud/php)
